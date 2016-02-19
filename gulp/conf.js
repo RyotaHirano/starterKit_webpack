@@ -43,10 +43,6 @@ export const serve = {
   }
 };
 
-export const eslint = {
-  src: [`${DIR.SRC}/**/*.js`]
-};
-
 export const clean = {
   path: [
     `${DIR.BUILD}`
@@ -59,11 +55,6 @@ export const imagemin = {
   opts: {
     //options
   }
-};
-
-export const uglify = {
-  src: [`${DIR.DST}${DIR.PATH}/**/*.js`],
-  dst: `${DIR.BUILD}/js`
 };
 
 export const copy = {
