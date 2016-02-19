@@ -1,6 +1,7 @@
 import WEBPACK from "webpack";
 
 export const DIR = {
+  PATH: '/',
   SRC: 'src',
   DST: 'dst',
   BUILD: 'public',
@@ -11,7 +12,7 @@ export const sass = {
   src: [
     `${DIR.SRC}/**/*.{scss,sass}`
   ],
-  dst: `${DIR.DST}/css`
+  dst: `${DIR.DST}${DIR.PATH}/css`
 };
 
 export const jade = {
@@ -20,42 +21,9 @@ export const jade = {
     `!${DIR.SRC}/**/_**/*.jade`,
     `!${DIR.SRC}/**/_*.jade`
   ],
-  dst: `${DIR.DST}/`,
+  dst: `${DIR.DST}${DIR.PATH}/`,
   opts: {
     pretty: true
-  }
-};
-
-export const webpack = {
-  src: [`${DIR.SRC}/**/*.js`],
-  dst: `${DIR.DST}/js`,
-  config: {
-    progress: true,
-    // **For multiple files**
-    // entry: {
-    //   hoge: `./${DIR.SRC}/js/hoge.js`,
-    //   fuga: `./${DIR.SRC}/js/fuga.js`
-    // },
-    // output: {
-    //   filename: '[name].js'
-    // },
-    entry: `./${DIR.SRC}/js/main.js`,
-    output: {
-      filename: 'index.js'
-    },
-    plugins: [
-      new WEBPACK.optimize.DedupePlugin(),            // ライブラリ間で依存しているモジュールが重複している場合、二重に読み込まないようにする
-      new WEBPACK.optimize.AggressiveMergingPlugin(), // ファイルを細かく分析し、まとめられるところはできるだけまとめてコードを圧縮する
-    ],
-    module: {
-      loaders: [
-        {
-          test: /\.js$/,
-          exclude: /node_modules/,
-          loader: 'babel-loader'
-        }
-      ]
-    }
   }
 };
 
@@ -64,13 +32,13 @@ export const serve = {
   reloadDebounce: 2000,
   ui: false,
   notify: false,
-  startPath: DIR.SITE_ROOT_PATH,
+  startPath: DIR.PATH,
   ghostMode: false,
   server: {
     baseDir: './',
-    index: `${DIR.DST}/`,
+    index: `${DIR.DST}${DIR.PATH}/`,
     routes: {
-      ['']: `${DIR.DST}/`
+      [DIR.PATH]: `${DIR.DST}${DIR.PATH}/`
     }
   }
 };
@@ -87,21 +55,21 @@ export const clean = {
 
 export const imagemin = {
   src: [`${DIR.SRC}/${DIR.IMG}/**`],
-  dst: `${DIR.BUILD}/${DIR.IMG}`,
+  dst: `${DIR.BUILD}${DIR.PATH}/${DIR.IMG}`,
   opts: {
     //options
   }
 };
 
 export const uglify = {
-  src: [`${DIR.DST}/**/*.js`],
+  src: [`${DIR.DST}${DIR.PATH}/**/*.js`],
   dst: `${DIR.BUILD}/js`
 };
 
 export const copy = {
   img: {
     src: [`${DIR.SRC}/${DIR.IMG}/**`],
-    dst: `${DIR.DST}/${DIR.IMG}`
+    dst: `${DIR.DST}${DIR.PATH}${DIR.IMG}`
   },
   build: {
     src: [
@@ -110,6 +78,6 @@ export const copy = {
       `!${DIR.DST}/${DIR.IMG}`,
       `!${DIR.DST}/${DIR.IMG}/**`
     ],
-    dst: `${DIR.BUILD}`
+    dst: `${DIR.BUILD}${DIR.PATH}`
   }
 };

@@ -1,9 +1,1 @@
-export const sass = require('gulp-sass');
-export const jade = require('gulp-jade');
-export const plumber = require('gulp-plumber');
-export const notify = require('gulp-notify');
-export const rename = require('gulp-rename');
-export const eslint = require('gulp-eslint');
-export const imagemin = require('gulp-imagemin');
-export const uglify = require('gulp-uglify');
-export const webpack = require('gulp-webpack');
+module.exports = require('gulp-load-plugins')();

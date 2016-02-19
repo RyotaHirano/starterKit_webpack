@@ -8,17 +8,8 @@ requireDir('./gulp/tasks');
 
 gulp.task('predefault', cb => {
   runSequence(
-    ['jade', 'sass', 'eslint'],
-    'webpack',
+    ['webpack', 'jade', 'sass'],
     'serve',
-    cb
-  );
-});
-
-gulp.task('scripts', cb => {
-  runSequence(
-    'eslint',
-    'webpack',
     cb
   );
 });
@@ -26,9 +17,7 @@ gulp.task('scripts', cb => {
 gulp.task('build', cb => {
   runSequence(
     'clean',
-    'eslint',
     ['jade', 'sass', 'webpack', 'imagemin'],
-    'uglify',
     'copy:build',
     cb
   );
@@ -36,15 +25,17 @@ gulp.task('build', cb => {
 
 gulp.task('default', ['predefault'], () => {
   gulp.watch(
-    [`./${DIR.SRC}/**/*.jade`],
+    [`${DIR.SRC}/html/**/*.jade`],
     ['jade', reload]
   );
   gulp.watch(
-    [`./${DIR.SRC}/**/*.{scss,sass}`],
+    [`${DIR.SRC}/css/**/*.{scss,sass}`],
     ['sass', reload]
   );
   gulp.watch(
-    [`./${DIR.SRC}/**/*.js`],
-    ['scripts', reload]
-  );
+    [`${DIR.SRC}/js/**/*.js`],
+    ['webpack', reload]
+  ).on('change', ev => {
+    console.log(`File ${ev.path} was ${ev.type}, running tasks...`);
+  });
 });
