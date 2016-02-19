@@ -8,6 +8,18 @@ export const DIR = {
   IMG: 'images'
 };
 
+export const AUTOPREFIXER = [
+  'ie >= 9',
+  'ie_mob >= 10',
+  'ff >= 30',
+  'chrome >= 34',
+  'safari >= 7',
+  'opera >= 23',
+  'ios >= 7',
+  'android >= 4.1',
+  'bb >= 7'
+];
+
 export const sass = {
   src: [
     `${DIR.SRC}/**/*.{scss,sass}`

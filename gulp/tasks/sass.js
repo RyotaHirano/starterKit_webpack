@@ -1,17 +1,22 @@
 import gulp from 'gulp';
-import { sass, plumber, notify, rename } from '../plugins';
-import { sass as conf } from '../conf';
+import { sass, postcss, cssnano } from '../plugins';
+import { sass as conf, AUTOPREFIXER } from '../conf';
 
+const postcssProcessors = [
+  require('autoprefixer')({ browsers: AUTOPREFIXER }),
+  require('css-mqpacker'),
+  require('postcss-flexbugs-fixes'),
+  require('postcss-partial-import')()
+];
 gulp.task('sass', () => {
-  return gulp.src(conf.src)
-    .pipe(plumber(
-      {
-        errorHandler: notify.onError('<%= error.message %>')
-      }
-    ))
-    .pipe(sass().on('error', sass.logError))
-    .pipe(rename({
-      dirname: './'
-    }))
+  return gulp.src(['src/css/style.scss'])
+    // .pipe(if(!isProduction, sourcemaps.init()))
+    .pipe(sass({
+      outputStyle: 'expanded',
+      includePaths: ['node_modules']
+    }).on('error', sass.logError))
+    .pipe(postcss(postcssProcessors))
+    // .pipe(if(!isProduction, sourcemaps.write()))
+    .pipe(if(isProduction, cssnano()))
     .pipe(gulp.dest(conf.dst));
 });
