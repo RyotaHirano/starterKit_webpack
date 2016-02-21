@@ -2,18 +2,18 @@ import path from 'path';
 import gulp from 'gulp';
 import webpack from 'webpack';
 import gutil from 'gulp-util';
-import { DIR } from '../conf';
-
-const isProduction = process.env.NODE_ENV === 'production';
+import { DIR, isProduction } from '../conf';
 
 const webpackConfigBase = require('../../webpack.config.base');
 const webpackConfig = Object.create(webpackConfigBase);
-webpackConfig.output.path = path.resolve('.', `${DIR.DST}/js`);
-if (isProduction) {
+
+if (isProduction) { // build
+  webpackConfig.output.path = path.resolve('.', `${DIR.BUILD}/js`);
   webpackConfig.plugins.push(
     new webpack.optimize.UglifyJsPlugin({ compress: { warnings: false } })
   );
 } else {
+  webpackConfig.output.path = path.resolve('.', `${DIR.DST}/js`);
   webpackConfig.cache = webpackConfig.debug = true;
   // webpackConfig.devtool = '#inline-source-map';
 }

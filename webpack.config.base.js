@@ -29,13 +29,12 @@ module.exports = {
         test: /\.js(x?)$/,
         exclude: /node_modules/,
         loader: 'eslint'
+      },
+      {
+        test: /\.(scss|sass)$/,
+        exclude: /node_modules/,
+        loader: 'sass-variables'
       }
-      // ,
-      // {
-      //   test: /\.(scss|sass)$/,
-      //   exclude: /node_modules/,
-      //   loader: 'sass-variables'
-      // }
     ]
   },
   eslint: {

@@ -8,6 +8,8 @@ export const DIR = {
   IMG: 'images'
 };
 
+export const isProduction = process.env.NODE_ENV === 'production';
+
 export const AUTOPREFIXER = [
   'ie >= 9',
   'ie_mob >= 10',

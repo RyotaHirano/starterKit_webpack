@@ -1,6 +1,6 @@
 import gulp from 'gulp';
-import { sass, postcss, cssnano } from '../plugins';
-import { sass as conf, AUTOPREFIXER } from '../conf';
+import { sass, postcss, if as IF, cssnano } from '../plugins';
+import { sass as conf, AUTOPREFIXER, isProduction } from '../conf';
 
 const postcssProcessors = [
   require('autoprefixer')({ browsers: AUTOPREFIXER }),
@@ -17,6 +17,6 @@ gulp.task('sass', () => {
     }).on('error', sass.logError))
     .pipe(postcss(postcssProcessors))
     // .pipe(if(!isProduction, sourcemaps.write()))
-    .pipe(if(isProduction, cssnano()))
+    .pipe(IF(isProduction, cssnano()))
     .pipe(gulp.dest(conf.dst));
 });
